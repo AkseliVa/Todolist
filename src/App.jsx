@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import Todotable from './components/Todotable';
+import Todoform from './components/Todoform';
 
 function App() {
   const [newTodo, setNewTodo] = React.useState({description: "", date: ""});
@@ -19,23 +20,7 @@ function App() {
     <>
       <h3>My Todos</h3>
 
-      <input 
-        type="text"
-        id="description"
-        value={newTodo.description} 
-        onChange={event => setNewTodo({...newTodo, description: event.target.value})}
-        placeholder="Description"
-      />
-
-      <input 
-        type="date"
-        id="date"
-        value={newTodo.date} 
-        onChange={event => setNewTodo({...newTodo, date: event.target.value})}
-        placeholder="Date"
-      />
-
-      <button onClick={addTodo}>Add todo</button>
+      <Todoform newTodo={newTodo} setNewTodo={setNewTodo} todos={todos} setTodos={setTodos} addTodo={addTodo} />
 
       <Todotable todos={todos} delete={deleteTodo}/>
     </>
