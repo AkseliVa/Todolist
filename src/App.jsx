@@ -1,6 +1,5 @@
 import React from 'react'
 import { AgGridReact } from 'ag-grid-react';
-import Header from './components/Header';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -51,53 +50,51 @@ function App() {
   }
 
   return (
-    <Container>
-      <Header />
+      <Container>
+       <Stack 
+          direction="row" 
+          spacing={2} 
+          alignItems="center" 
+          justifyContent="center"
+          mt={2}
+        >
+          <TextField 
+            type="text"
+            id="description"
+            value={newTodo.description} 
+            onChange={event => setNewTodo({...newTodo, description: event.target.value})}
+            label="Description"
+          />
 
-      <Stack 
-        direction="row" 
-        spacing={2} 
-        alignItems="center" 
-        justifyContent="center"
-        mt={2}
-      >
-        <TextField 
-          type="text"
-          id="description"
-          value={newTodo.description} 
-          onChange={event => setNewTodo({...newTodo, description: event.target.value})}
-          label="Description"
-        />
+          <TextField 
+            type="text"
+            id="priority"
+            value={newTodo.priority} 
+            onChange={event => setNewTodo({...newTodo, priority: event.target.value})}
+            label="Priority"
+          />
 
-        <TextField 
-          type="text"
-          id="priority"
-          value={newTodo.priority} 
-          onChange={event => setNewTodo({...newTodo, priority: event.target.value})}
-          label="Priority"
-        />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker value={newTodo.date} onChange={date => changeDate(date)} />
+          </LocalizationProvider>
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker value={newTodo.date} onChange={date => changeDate(date)} />
-        </LocalizationProvider>
+          <Button variant='contained' onClick={addTodo}>Add todo</Button>
+          <Button variant='contained' color='error' onClick={deleteTodo}>Delete</Button>
+        </Stack>
 
-        <Button variant='contained' onClick={addTodo}>Add todo</Button>
-        <Button variant='contained' color='error' onClick={deleteTodo}>Delete</Button>
-      </Stack>
-
-      <Stack alignItems="center" justifyContent="center">
-        <div className='ag-theme-material' style={{height: 390, width:600}}>
-          <AgGridReact
-            ref={gridRef}
-            onGridReady={params => gridRef.current = params.api}
-            rowSelection='single'
-            rowData={todos}
-            columnDefs={columnDefs}
-            animateRows={true}>
-          </AgGridReact>
-        </div>
-      </Stack>
-    </Container>
+        <Stack alignItems="center" justifyContent="center">
+          <div className='ag-theme-material' style={{height: 390, width:600}}>
+            <AgGridReact
+              ref={gridRef}
+              onGridReady={params => gridRef.current = params.api}
+              rowSelection='single'
+              rowData={todos}
+              columnDefs={columnDefs}
+              animateRows={true}>
+            </AgGridReact>
+          </div>
+        </Stack>
+      </Container>
   )
 }
 
